@@ -95,12 +95,90 @@ function createMaterial() {
 }
 
 
-
 //// B) Rotación al scrollear.
+// 1. Crear un objeto con la data referente al SCROLL para ocuparla en todos lados.
+var scroll = {
+   y: 0, // escuchar el valor del scroll (y).
+   lerpedY: 0, // técnica de animación, valor del scroll en fricción.
+   speed: 0.005, //disminución o aumento de la velocidad del scroll.
+   cof: 0.007 // coeficiente de fricción, calcular que tan suave.
+};
 
+// 2. Escuchar el evento scroll y actualizar el valor del scroll.
+function updateScrollData(eventData) {
+   scroll.y += eventData.deltaX * scroll.speed;
+}
+
+//updateScrollData es la función que actualiza el valor del scroll.
+window.addEventListener("wheel", updateScrollData); // wheel es el evento que escucha el scroll del mouse.
+
+// 3. Aplicar el valor del scroll a la rotación del mesh. (en el loop de animación)
+function updateMeshRotation() {
+   mesh.rotation.y = scroll.lerpedY;
+}
+
+// 5. Vamos a suavizar un poco el valor de rotación para que los cambios de dirección sean menos bruscos.
+function lerpScrollY() {
+   scroll.lerpedY += (scroll.y - scroll.lerpedY) * scroll.cof;
+}
 
 
 //// C) Movimiento de cámara con mouse (fricción) aka "Gaze Camera".
+// 1. Crear un objeto con la data referente al MOUSE para ocuparla en todos lados.
+var mouse = {
+   x: 0,
+   y: 0,
+   normalOffset: {
+       x: 0,
+       y: 0
+   },
+   lerpNormalOffset: {
+       x: 0,
+       y: 0
+   },
+
+   cof: 0.07,
+   gazeRange: {
+       x: 7,
+       y: 3
+   }
+}
+
+// 2. Leer posición del mouse y calcular distancia del mouse al centro.
+function updateMouseData(eventData) {
+   updateMousePosition(eventData); // calcular la posicion del mouse
+   calculateNormalOffset(); // calcular la distancia del centro
+}
+function updateMousePosition(eventData) {
+   mouse.x = eventData.clientX;
+   mouse.y = eventData.clientY;
+}
+function calculateNormalOffset() {
+   let windowCenter = {
+       x: canvas.width / 2,
+       y: canvas.height / 2,
+   }
+   mouse.normalOffset.x = ( (mouse.x - windowCenter.x) / canvas.width ) * 2;
+   mouse.normalOffset.y = ( (mouse.y - windowCenter.y) / canvas.height ) * 2;
+}
+
+window.addEventListener("mousemove", updateMouseData);
+
+// 3. Aplicar valor calculado a la posición de la cámara. (en el loop de animación)
+function updateCameraPosition() {
+   camera.position.x = mouse.normalOffset.x * mouse.gazeRange.x;
+   camera.position.y = -mouse.normalOffset.y * mouse.gazeRange.y;
+}
+
+// 1. Incrementar gradualmente el valor de la distancia que vamos a usar para animar y lo guardamos en otro atributo. (en el loop de animación)
+
+function lerpDistanceToCenter() {
+   mouse.lerpNormalOffset.x += (mouse.normalOffset.x - mouse.lerpNormalOffset.x) * mouse.cof;
+   mouse.lerpNormalOffset.y += (mouse.normalOffset.y - mouse.lerpNormalOffset.y) * mouse.cof;
+}
+
+
+
 
 ///////// FIN DE LA CLASE.
 
@@ -111,8 +189,13 @@ function createMaterial() {
 // Final. Crear loop de animación para renderizar constantemente la escena.
 function animate() {
     requestAnimationFrame(animate); /// renderiza constantemente nuestro objeto 3D.
-
-    mesh.rotation.x -= 0.005;
+    // 4. Dentro de la función “animate”, ejecutamos la función que acabamos de crear.
+   mesh.rotation.x -= 0.005;
+    lerpScrollY()
+    updateMeshRotation();
+    lerpDistanceToCenter();
+    updateCameraPosition();
+    camera.lookAt(mesh.position);
 
     renderer.render(scene, camera);
 }
