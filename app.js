@@ -17,7 +17,8 @@ const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1
 
 // 3.1 Configurar mesh.
 //const geo = new THREE.TorusKnotGeometry(1, 0.35, 128, 5, 2);
-const geo = new THREE.SphereGeometry(1.5, 128, 128);
+const geo = new THREE.OctahedronGeometry(1, 1);
+
 
 const material = new THREE.MeshStandardMaterial({
     color: "#ffffff",
@@ -88,7 +89,7 @@ function createMaterial() {
        displacementMap: tex.displacement,
        displacementScale: 0.4,
        side: THREE.FrontSide,
-       // wireframe: true,
+       //wireframe: true,
    });
 
    mesh.material = pbrMaterial; // VAS A REMPLAZAR EL MATERIAL POR ESTE NUEVO. Linea 79.
