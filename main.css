@@ -59,3 +59,26 @@ footer {
     right: 2.2vh;
     width: 10vh;
 }
+
+#textura01, #textura02 {
+    width: 15vh;
+    height: 15vh;
+    border: none;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    mix-blend-mode: difference;
+}
+
+
+#contenedorTexturas {
+    position: absolute;
+    top: 50%;   /* coloca el centro vertical */
+    left: 80%;  /* coloca el centro horizontal */
+    transform: translate(-50%, -45%); /* ajusta para que quede un poquito arriba del centro */
+    display: flex;
+    flex-direction: column; /* en columna */
+    align-items: center;
+    gap: 2vh; /* espacio entre botones */
+}
