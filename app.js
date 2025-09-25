@@ -12,7 +12,7 @@ canvas.height = window.innerHeight;
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({ canvas: canvas });
 renderer.setSize(canvas.width, canvas.height);
-renderer.setClearColor("#0a0c2c");
+renderer.setClearColor("#130228ff");
 const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 1000);
 
 const orbit = new THREE.Group();
@@ -20,8 +20,8 @@ scene.add(orbit);
 
 // 3.1 Configurar mesh.
 //const geo = new THREE.TorusKnotGeometry(1, 0.35, 128, 5, 2);
-const geo = new THREE.OctahedronGeometry(1, 1);
-const geo2 = new THREE.TorusGeometry( 2, 0.2, 16, 100 ); 
+const geo = new THREE.OctahedronGeometry(1, 2);
+const geo2 = new THREE.TorusGeometry( 2, 0.1, 16, 100 ); 
 
 
 const material = new THREE.MeshStandardMaterial({
@@ -41,11 +41,11 @@ ring.position.z = -7;
 
 
 // 3.2 Crear luces.
-const frontLight = new THREE.PointLight("#ffffff", 300, 100);
+const frontLight = new THREE.PointLight("#5d3d76", 300, 100);
 frontLight.position.set(7, 3, 3);
 scene.add(frontLight);
 
-const rimLight = new THREE.PointLight("#0066ff", 50, 100); //LUZ TRASEA/CONTRALUZ
+const rimLight = new THREE.PointLight("#ff0000", 50, 100); //LUZ TRASEA/CONTRALUZ
 rimLight.position.set(-7, -3, -7);
 scene.add(rimLight);
 
@@ -86,6 +86,27 @@ const tex = {
    roughness: loader.load('./assets/texturas/bricks/roughness.png'), //brillo blanco
    displacement: loader.load('./assets/texturas/bricks/displacement.png'),
 };
+
+const tex02 = {
+   albedo: loader.load('./assets/texturas/red_crystal/albedo.jpg'),
+   ao: loader.load('./assets/texturas/red_crystal/ao.jpg'),
+   metalness: loader.load('./assets/texturas/bricks/metallic.png'),// define si la textura es metálica o no, blanca= metal negro=no metal (mate).
+   normal: loader.load('./assets/texturas/red_crystal/normal_opengl.png'), // ayuda a definir los relieves  y luz de la textura.
+   roughness: loader.load('./assets/texturas/red_crystal/roughness.jpg'), //brillo blanco
+   displacement: loader.load('./assets/texturas/red_crystal/displacement.png'),
+};
+
+const tex03 = {
+  albedo: loader.load('./assets/texturas/violet_crystal/albedo.jpg'),
+  ao: loader.load('./assets/texturas/violet_crystal/ao.jpg'),
+  metalness: loader.load('./assets/texturas/violet_crystal/metallic.jpg'),
+  normal: loader.load('./assets/texturas/violet_crystal/normal.jpg'),
+  roughness: loader.load('./assets/texturas/violet_crystal/roughness.jpg'),
+  displacement: loader.load('./assets/texturas/violet_crystal/displacement.jpg'),
+  emissive: loader.load('./assets/texturas/violet_crystal/emissive.jpg'), 
+};
+
+
 // NOTA: las texturas se cargan de forma asíncrona, por lo que no podemos usarlas hasta que no estén todas cargadas.
 
 // 4. Definimos variables y la función que va a crear el material al cargar las texturas.
@@ -93,12 +114,12 @@ var pbrMaterial;
 
 function createMaterial() {
    pbrMaterial = new THREE.MeshStandardMaterial({
-       map: tex.albedo,
-       aoMap: tex.ao,
-       metalnessMap: tex.metalness,
-       normalMap: tex.normal,
-       roughnessMap: tex.roughness,
-       displacementMap: tex.displacement,
+       map: tex02.albedo,
+       aoMap: tex02.ao,
+       metalnessMap: tex02.metalness,
+       normalMap: tex02.normal,
+       roughnessMap: tex02.roughness,
+       displacementMap: tex02.displacement,
        displacementScale: 0.4,
        side: THREE.FrontSide,
        //wireframe: true,
