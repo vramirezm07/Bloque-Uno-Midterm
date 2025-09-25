@@ -60,23 +60,39 @@ footer {
     width: 10vh;
 }
 
-#textura01, #textura02 {
-    width: 15vh;
+
+
+.materiaSwitch {
+    width:  15vh;
     height: 15vh;
     border: none;
     cursor: pointer;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    mix-blend-mode: difference;
+    background-repeat: no-repeat;    
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* transición suave */
+
 }
+.materiaSwitch:hover {
+    transform: scale(1.1);
+}
+
+#textura01 {
+    background-image: url('./assets/texturas/red_crystal/albedo.jpg');
+}
+#textura02 {
+    background-image: url('./assets/texturas/violet_crystal/albedo.jpg');
+}
+#textura03 {
+    background-image: url('./assets/texturas/crystal/albedo.jpg');
+}
+
 
 
 #contenedorTexturas {
     position: absolute;
-    top: 50%;   /* coloca el centro vertical */
+    top: 25%;   /* coloca el centro vertical */
     left: 80%;  /* coloca el centro horizontal */
-    transform: translate(-50%, -45%); /* ajusta para que quede un poquito arriba del centro */
     display: flex;
     flex-direction: column; /* en columna */
     align-items: center;
