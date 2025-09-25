@@ -15,18 +15,30 @@ renderer.setSize(canvas.width, canvas.height);
 renderer.setClearColor("#0a0c2c");
 const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 1000);
 
+const orbit = new THREE.Group();
+scene.add(orbit);
+
 // 3.1 Configurar mesh.
 //const geo = new THREE.TorusKnotGeometry(1, 0.35, 128, 5, 2);
 const geo = new THREE.OctahedronGeometry(1, 1);
+const geo2 = new THREE.TorusGeometry( 2, 0.2, 16, 100 ); 
 
 
 const material = new THREE.MeshStandardMaterial({
     color: "#ffffff",
     //wireframe: false,
 });
+
 const mesh = new THREE.Mesh(geo, material);
 scene.add(mesh);
+scene.add(orbit);
 mesh.position.z = -7;
+
+const ring = new THREE.Mesh(geo2, material);
+scene.add(ring);
+scene.add(orbit);
+ring.position.z = -7;
+
 
 // 3.2 Crear luces.
 const frontLight = new THREE.PointLight("#ffffff", 300, 100);
@@ -91,7 +103,7 @@ function createMaterial() {
        side: THREE.FrontSide,
        //wireframe: true,
    });
-
+   ring.material =pbrMaterial;
    mesh.material = pbrMaterial; // VAS A REMPLAZAR EL MATERIAL POR ESTE NUEVO. Linea 79.
 }
 
@@ -116,6 +128,7 @@ window.addEventListener("wheel", updateScrollData); // wheel es el evento que es
 // 3. Aplicar el valor del scroll a la rotación del mesh. (en el loop de animación)
 function updateMeshRotation() {
    mesh.rotation.y = scroll.lerpedY;
+   ring.rotation.y = scroll.lerpedY;
 }
 
 // 5. Vamos a suavizar un poco el valor de rotación para que los cambios de dirección sean menos bruscos.
@@ -179,8 +192,6 @@ function lerpDistanceToCenter() {
 }
 
 
-
-
 ///////// FIN DE LA CLASE.
 
 
@@ -191,7 +202,8 @@ function lerpDistanceToCenter() {
 function animate() {
     requestAnimationFrame(animate); /// renderiza constantemente nuestro objeto 3D.
     // 4. Dentro de la función “animate”, ejecutamos la función que acabamos de crear.
-   mesh.rotation.x -= 0.005;
+   ring.rotation.x += 0.005;
+    mesh.rotation.x -= 0.005;
     lerpScrollY()
     updateMeshRotation();
     lerpDistanceToCenter();
