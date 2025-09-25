@@ -12,7 +12,7 @@ canvas.height = window.innerHeight;
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({ canvas: canvas });
 renderer.setSize(canvas.width, canvas.height);
-renderer.setClearColor("#130228ff");
+renderer.setClearColor("#090014");
 const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 1000);
 
 const orbit = new THREE.Group();
@@ -30,24 +30,27 @@ const material = new THREE.MeshStandardMaterial({
 });
 
 const mesh = new THREE.Mesh(geo, material);
-scene.add(mesh);
-scene.add(orbit);
-mesh.position.z = -7;
+orbit.add(mesh);
+mesh.position.z = 0; // <-- Cambia a 0
 
 const ring = new THREE.Mesh(geo2, material);
-scene.add(ring);
-scene.add(orbit);
-ring.position.z = -7;
+orbit.add(ring);
+ring.position.z = 0; // <-- Cambia a 0
 
+orbit.position.z = -7; // <-- Mueve el grupo
 
 // 3.2 Crear luces.
-const frontLight = new THREE.PointLight("#5d3d76", 300, 100);
+const frontLight = new THREE.PointLight("#724991", 300, 100);
 frontLight.position.set(7, 3, 3);
 scene.add(frontLight);
 
 const rimLight = new THREE.PointLight("#ff0000", 50, 100); //LUZ TRASEA/CONTRALUZ
 rimLight.position.set(-7, -3, -7);
 scene.add(rimLight);
+
+//const rimLight02 = new THREE.PointLight("#a200ff", 30, 50); //LUZ TRASEA/CONTRALUZ
+//rimLight02.position.set(7, -3, -7);
+//scene.add(rimLight02);
 
 ///////// EN CLASE.
 
@@ -97,6 +100,16 @@ const tex02 = {
 };
 
 const tex03 = {
+  albedo: loader.load('./assets/texturas/violet_crystal/albedo.jpg'),
+  ao: loader.load('./assets/texturas/violet_crystal/ao.jpg'),
+  metalness: loader.load('./assets/texturas/violet_crystal/metallic.jpg'),
+  normal: loader.load('./assets/texturas/violet_crystal/normal.jpg'),
+  roughness: loader.load('./assets/texturas/violet_crystal/roughness.jpg'),
+  displacement: loader.load('./assets/texturas/violet_crystal/displacement.jpg'),
+  emissive: loader.load('./assets/texturas/violet_crystal/emissive.jpg'), 
+};
+
+const tex04 = {
   albedo: loader.load('./assets/texturas/violet_crystal/albedo.jpg'),
   ao: loader.load('./assets/texturas/violet_crystal/ao.jpg'),
   metalness: loader.load('./assets/texturas/violet_crystal/metallic.jpg'),
@@ -219,18 +232,43 @@ function lerpDistanceToCenter() {
 /////////
 
 
+let grande = false; // estado inicial
+
+canvas.addEventListener("mousedown", function () {
+  if (!grande) {
+    // Si está en tamaño normal → lo agranda
+    gsap.to(orbit.scale, {
+      x: 2,
+      y: 2,
+      z: 2,
+      duration: 0.7,
+      ease: "circ.out"
+    });
+  } else {
+    // Si ya está grande → lo regresa
+    gsap.to(orbit.scale, {
+      x: 1,
+      y: 1,
+      z: 1,
+      duration: 0.7,
+      ease: "power2.out"
+    });
+  }
+
+  // Cambiar el estado
+  grande = !grande;
+});
+
 // Final. Crear loop de animación para renderizar constantemente la escena.
 function animate() {
-    requestAnimationFrame(animate); /// renderiza constantemente nuestro objeto 3D.
-    // 4. Dentro de la función “animate”, ejecutamos la función que acabamos de crear.
-   ring.rotation.x += 0.005;
+    requestAnimationFrame(animate);
+    ring.rotation.x += 0.005;
     mesh.rotation.x -= 0.005;
     lerpScrollY()
     updateMeshRotation();
     lerpDistanceToCenter();
     updateCameraPosition();
-    camera.lookAt(mesh.position);
-
+    camera.lookAt(orbit.position); // <-- Mira al grupo
     renderer.render(scene, camera);
 }
 
