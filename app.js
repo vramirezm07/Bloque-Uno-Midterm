@@ -20,7 +20,7 @@ scene.add(orbit);
 
 // 3.1 Configurar mesh.
 //const geo = new THREE.TorusKnotGeometry(1, 0.35, 128, 5, 2);
-const geo = new THREE.OctahedronGeometry(1, 2);
+const geo = new THREE.OctahedronGeometry(1, 10);
 const geo2 = new THREE.TorusGeometry( 2, 0.1, 16, 100 ); 
 
 
@@ -40,11 +40,11 @@ ring.position.z = 0; // <-- Cambia a 0
 orbit.position.z = -7; // <-- Mueve el grupo
 
 // 3.2 Crear luces.
-const frontLight = new THREE.PointLight("#724991", 300, 100);
+const frontLight = new THREE.PointLight("#a757e4", 300, 100);
 frontLight.position.set(7, 3, 3);
 scene.add(frontLight);
 
-const rimLight = new THREE.PointLight("#ff0000", 50, 100); //LUZ TRASEA/CONTRALUZ
+const rimLight = new THREE.PointLight("#ff0095", 50, 100); //LUZ TRASEA/CONTRALUZ
 rimLight.position.set(-7, -3, -7);
 scene.add(rimLight);
 
@@ -81,25 +81,17 @@ manager.onError = function (url) {
 const loader = new THREE.TextureLoader(manager);
 
 // 3. Cargamos texturas guardadas en el folder del proyecto.
-const tex = {
-   albedo: loader.load('./assets/texturas/bricks/albedo.png'),
-   ao: loader.load('./assets/texturas/bricks/ao.png'),
-   metalness: loader.load('./assets/texturas/bricks/metallic.png'),// define si la textura es metálica o no, blanca= metal negro=no metal (mate).
-   normal: loader.load('./assets/texturas/bricks/normal.png'), // ayuda a definir los relieves  y luz de la textura.
-   roughness: loader.load('./assets/texturas/bricks/roughness.png'), //brillo blanco
-   displacement: loader.load('./assets/texturas/bricks/displacement.png'),
-};
 
-const tex02 = {
+const redCrystal = {
    albedo: loader.load('./assets/texturas/red_crystal/albedo.jpg'),
    ao: loader.load('./assets/texturas/red_crystal/ao.jpg'),
-   metalness: loader.load('./assets/texturas/bricks/metallic.png'),// define si la textura es metálica o no, blanca= metal negro=no metal (mate).
+   metalness: loader.load('./assets/texturas/red_crystal/metallic.png'),// define si la textura es metálica o no, blanca= metal negro=no metal (mate).
    normal: loader.load('./assets/texturas/red_crystal/normal_opengl.png'), // ayuda a definir los relieves  y luz de la textura.
    roughness: loader.load('./assets/texturas/red_crystal/roughness.jpg'), //brillo blanco
    displacement: loader.load('./assets/texturas/red_crystal/displacement.png'),
 };
 
-const tex03 = {
+const violetCrystal = {
   albedo: loader.load('./assets/texturas/violet_crystal/albedo.jpg'),
   ao: loader.load('./assets/texturas/violet_crystal/ao.jpg'),
   metalness: loader.load('./assets/texturas/violet_crystal/metallic.jpg'),
@@ -109,37 +101,92 @@ const tex03 = {
   emissive: loader.load('./assets/texturas/violet_crystal/emissive.jpg'), 
 };
 
-const tex04 = {
-  albedo: loader.load('./assets/texturas/violet_crystal/albedo.jpg'),
-  ao: loader.load('./assets/texturas/violet_crystal/ao.jpg'),
-  metalness: loader.load('./assets/texturas/violet_crystal/metallic.jpg'),
-  normal: loader.load('./assets/texturas/violet_crystal/normal.jpg'),
-  roughness: loader.load('./assets/texturas/violet_crystal/roughness.jpg'),
-  displacement: loader.load('./assets/texturas/violet_crystal/displacement.jpg'),
-  emissive: loader.load('./assets/texturas/violet_crystal/emissive.jpg'), 
+const greenCrystal = {
+  albedo: loader.load('./assets/texturas/crystal/albedo.jpg'),
+  ao: loader.load('./assets/texturas/crystal/ao.jpg'),
+  metalness: loader.load('./assets/texturas/crystal/metallic.png'),
+  normal: loader.load('./assets/texturas/crystal/normal.jpg'),
+  roughness: loader.load('./assets/texturas/crystal/roughness.jpg'),
+  displacement: loader.load('./assets/texturas/crystal/displacement.png'),
+};
+
+const metalTexture = {
+  albedo: loader.load('./assets/texturas/metal/albedo.png'),
+  ao: loader.load('./assets/texturas/metal/ao.png'),
+  metalness: loader.load('./assets/texturas/metal/metallic.png'),
+  normal: loader.load('./assets/texturas/metal/normal.png'),
+  roughness: loader.load('./assets/texturas/metal/roughness.png'),
+  displacement: loader.load('./assets/texturas/metal/displacement.png'),
 };
 
 
 // NOTA: las texturas se cargan de forma asíncrona, por lo que no podemos usarlas hasta que no estén todas cargadas.
 
 // 4. Definimos variables y la función que va a crear el material al cargar las texturas.
-var pbrMaterial;
+
+var metalMaterial;
+var redCrystalMaterial;
+var violetCrystalMaterial;
+var greenCrystalMaterial;
 
 function createMaterial() {
-   pbrMaterial = new THREE.MeshStandardMaterial({
-       map: tex02.albedo,
-       aoMap: tex02.ao,
-       metalnessMap: tex02.metalness,
-       normalMap: tex02.normal,
-       roughnessMap: tex02.roughness,
-       displacementMap: tex02.displacement,
+   metalMaterial = new THREE.MeshStandardMaterial({
+       map: metalTexture.albedo,
+       aoMap: metalTexture.ao,
+       metalnessMap: metalTexture.metalness,
+       normalMap: metalTexture.normal,
+       roughnessMap: metalTexture.roughness,
+       displacementMap: metalTexture.displacement,
        displacementScale: 0.4,
-       side: THREE.FrontSide,
+       side: THREE.DoubleSideSide,
+       metalness: 0.5,
+       roughness: 0.1,
        //wireframe: true,
    });
-   ring.material =pbrMaterial;
-   mesh.material = pbrMaterial; // VAS A REMPLAZAR EL MATERIAL POR ESTE NUEVO. Linea 79.
+
+   redCrystalMaterial = new THREE.MeshStandardMaterial({
+       map: redCrystal.albedo,
+       metalnessMap: redCrystal.metalness,
+       normalMap: redCrystal.normal,
+       roughnessMap: redCrystal.roughness,
+       displacementMap: metalTexture.displacement,
+       displacementScale: 0.4,
+       metalness: 1,
+       roughness: 0.2,
+       side: THREE.DoubleSide,
+   });
+
+   violetCrystalMaterial = new THREE.MeshStandardMaterial({
+       map: violetCrystal.albedo,
+       metalnessMap: redCrystal.metalness,
+       normalMap: redCrystal.normal,
+       roughnessMap: redCrystal.roughness,
+       displacementMap: metalTexture.displacement,
+       displacementScale: 0.4,
+       metalness: 1,
+       roughness: 1,
+       side: THREE.DoubleSide,
+   });
+
+   greenCrystalMaterial = new THREE.MeshStandardMaterial({
+       map: greenCrystal.albedo,
+       metalnessMap: redCrystal.metalness,
+       normalMap: redCrystal.normal,
+       roughnessMap: redCrystal.roughness,
+       displacementMap: metalTexture.displacement,
+       displacementScale: 0.4,
+       metalness: 1,
+       roughness: 1,
+       side: THREE.DoubleSide,
+   });
+
+
+   ring.material =metalMaterial;
+   mesh.material = metalMaterial; // VAS A REMPLAZAR EL MATERIAL POR ESTE NUEVO. Linea 79.
 }
+
+// 5. Cambiar materiales con botones.
+
 
 
 //// B) Rotación al scrollear.
@@ -262,7 +309,7 @@ canvas.addEventListener("mousedown", function () {
 // Final. Crear loop de animación para renderizar constantemente la escena.
 function animate() {
     requestAnimationFrame(animate);
-    ring.rotation.x += 0.005;
+    ring.rotation.x += 0.01;
     mesh.rotation.x -= 0.005;
     lerpScrollY()
     updateMeshRotation();
