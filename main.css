@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Rubik+80s+Fade&display=swap');
+
 @font-face {
   font-family: "Formula";
   src:
@@ -5,13 +7,13 @@
     url("./assets/fonts/PPFormula-CondensedBlack.otf") format("opentype");
 }
 
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Formula", sans-serif;
     text-transform: uppercase;
-    color: aqua;
 }
 
 #lienzo {
@@ -29,6 +31,7 @@ header {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    font-family: "Nabla", sans-serif;
 }
 
 .title {
@@ -50,7 +53,11 @@ footer {
 .subtitle {
     position: relative;
     padding: 2vh 0 0 2vh;
-    font-size: 14vh;
+    font-size: 10vh;
+    font-family: "Rubik 80s Fade", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  color: blueviolet;
 }
 
 #centroLogo {
