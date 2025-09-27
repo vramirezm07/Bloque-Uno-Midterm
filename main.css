@@ -105,3 +105,60 @@ footer {
     align-items: center;
     gap: 2vh; /* espacio entre botones */
 }
+
+        .menuTitulo {
+    font-family: ;
+    position: absolute;
+    top: 22%;
+    left: 80%;
+    transform: translateX(-50%);
+    font-size: 2.5vh;
+    color: #fff;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+    margin-bottom: 1vh;
+    z-index: 10;
+}
+
+.indicacionesMenu {
+    position: absolute;
+    top: 22%;
+    left: 5%;
+    z-index: 10;
+}
+
+#indicacionesToggle {
+    background: #a757e4;
+    color: #fff;
+    border: none;
+    padding: 1vh 2vh;
+    border-radius: 1vh;
+    cursor: pointer;
+    font-size: 2vh;
+    font-family: "Formula", sans-serif;
+    margin-bottom: 1vh;
+    transition: background 0.3s;
+}
+
+#indicacionesToggle:hover {
+    background: #ff0095;
+}
+
+.indicacionesContenido {
+    display: none;
+    background: rgba(16,7,30,0.95);
+    color: #fff;
+    padding: 2vh;
+    border-radius: 1vh;
+    font-size: 1.8vh;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    max-width: 28vh;
+}
+
+.indicacionesContenido ul {
+    padding-left: 1.5vh;
+}
+
+.indicacionesContenido li {
+    margin-bottom: 1vh;
+}

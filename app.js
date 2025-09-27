@@ -320,3 +320,10 @@ function animate() {
 }
 
 animate();
+
+const toggleBtn = document.getElementById("indicacionesToggle");
+const indicaciones = document.getElementById("indicacionesContenido");
+
+toggleBtn.addEventListener("click", () => {
+    indicaciones.style.display = indicaciones.style.display === "block" ? "none" : "block";
+});
