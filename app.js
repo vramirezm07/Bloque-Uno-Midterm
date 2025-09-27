@@ -40,13 +40,24 @@ ring.position.z = 0; // <-- Cambia a 0
 orbit.position.z = -7; // <-- Mueve el grupo
 
 // 3.2 Crear luces.
-const frontLight = new THREE.PointLight("#a757e4", 300, 100);
+// Luz principal tenue (frontal, como reflejo de luna fría)
+const frontLight = new THREE.PointLight("#8a6db3", 40, 100); 
 frontLight.position.set(7, 3, 3);
 scene.add(frontLight);
 
-const rimLight = new THREE.PointLight("#ff0095", 50, 100); //LUZ TRASEA/CONTRALUZ
-rimLight.position.set(-7, -3, -7);
-scene.add(rimLight);
+// Contraluz morada fuerte izquierda/atrás
+const rimLightLeft = new THREE.PointLight("#6a00ff", 250, 200);
+rimLightLeft.position.set(-7, -3, -7);
+scene.add(rimLightLeft);
+
+// Nueva contraluz derecha
+const rimLightRight = new THREE.PointLight("#bf00ff", 180, 200); 
+rimLightRight.position.set(7, -3, -7); 
+scene.add(rimLightRight);
+
+// Luz ambiental muy oscura para que no quede todo negro
+const ambientLight = new THREE.AmbientLight("#1a0d33", 0.3); 
+scene.add(ambientLight);
 
 //const rimLight02 = new THREE.PointLight("#a200ff", 30, 50); //LUZ TRASEA/CONTRALUZ
 //rimLight02.position.set(7, -3, -7);
