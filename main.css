@@ -135,14 +135,14 @@ footer {
 
 .indicacionesMenu {
     position: absolute;
-    top: 22%;
-    left: 5%;
+    top: 10%;
+    padding: 2%;
     z-index: 10;
 }
 
 #indicacionesToggle {
-    background: #ffffff;
-    color: #fff;
+    background: #4600d2;
+    color: #ffffff;
     border: none;
     padding: 1vh 2vh;
     border-radius: 1vh;
@@ -151,6 +151,7 @@ footer {
     font-family: "Formula", sans-serif;
     margin-bottom: 1vh;
     transition: background 0.3s;
+    align-items: center;
 }
 
 #indicacionesToggle:hover {
@@ -160,7 +161,7 @@ footer {
 .indicacionesContenido {
     display: none;
     background: rgba(31, 31, 31, 0.95);
-    color: #fff;
+    color: #ffffff;
     padding: 2vh;
     border-radius: 1vh;
     font-size: 1.8vh;
@@ -187,4 +188,18 @@ footer {
   opacity: 0;
   transition: opacity 0.15s ease;
   z-index: 1000;
+}
+
+.textoIndicaciones {
+  font-size: 0.9rem;
+  color: #ccc;       /* gris clarito */
+  margin-bottom: 6px;
+  text-align: center;
+  font-style: italic;
+
+  max-width: 300px;       /* límite de ancho */
+  margin-left: auto;      /* centrado */
+  margin-right: auto;
+  word-wrap: break-word;  /* que las palabras largas se corten si es necesario */
+  white-space: normal;
 }

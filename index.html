@@ -11,10 +11,14 @@
     <canvas id="lienzo"></canvas>
     
   <div id="contenedorTexturas">
-  <button id="textura01" class="materiaSwitch" data-info="Piedra: textura rugosa y fría."></button>
-  <button id="textura02" class="materiaSwitch" data-info="Piedra: textura rugosa y fría."></button>
-  <button id="textura03" class="materiaSwitch" data-info="Piedra: textura rugosa y fría."></button>
+  <button id="textura01" class="materiaSwitch" data-info="Cristal Rojo."></button>
+  <button id="textura02" class="materiaSwitch" data-info="Cristal violeta"></button>
+  <button id="textura03" class="materiaSwitch" data-info="Cristal verde"></button>
     </div>
+
+    <!-- Tooltip flotante -->
+<div id="tooltip"></div>
+
     <div id="tituloTexturas" class="menuTitulo">
         <p>Texturas</span>
     </div>
@@ -24,7 +28,12 @@
         <h1 class="title">Proyecto Intermedio.</h1>
     </header>
 
+
+
     <div id="menuIndicaciones" class="indicacionesMenu">
+        <!-- Texto arriba del botón -->
+    <p class="textoIndicaciones">Haz clic para ver las instrucciones</p>
+
         <button id="indicacionesToggle">¿Cómo usar?</button>
         <div id="indicacionesContenido" class="indicacionesContenido">
             <ul>

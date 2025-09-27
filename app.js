@@ -332,9 +332,28 @@ function animate() {
 
 animate();
 
+
+// para la interfaz (botones y tooltip)
 const toggleBtn = document.getElementById("indicacionesToggle");
 const indicaciones = document.getElementById("indicacionesContenido");
 
 toggleBtn.addEventListener("click", () => {
     indicaciones.style.display = indicaciones.style.display === "block" ? "none" : "block";
+});
+
+
+const buttons = document.querySelectorAll(".materiaSwitch");
+const tooltip = document.getElementById("tooltip");
+
+buttons.forEach(btn => {
+  btn.addEventListener("mousemove", e => {
+    tooltip.textContent = btn.getAttribute("data-info");
+    tooltip.style.left = e.pageX + 15 + "px";
+    tooltip.style.top = e.pageY + 15 + "px";
+    tooltip.style.opacity = 1;
+  });
+
+  btn.addEventListener("mouseleave", () => {
+    tooltip.style.opacity = 0;
+  });
 });
