@@ -45,7 +45,17 @@ footer {
     bottom: 0; left: 0;
     width: 100%;
     mix-blend-mode: luminosity;
+    padding: 2vh;
 }
+
+
+a i {
+      color: #a809e1 !important;
+
+    }
+    a:hover i {
+      color: #ff4081; /* cambia al pasar el mouse */
+    }
 
 .subtitle {
     position: relative;
