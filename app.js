@@ -169,9 +169,9 @@ function createMaterial() {
 
    violetCrystalMaterial = new THREE.MeshStandardMaterial({
        map: violetCrystal.albedo,
-       metalnessMap: redCrystal.metalness,
-       normalMap: redCrystal.normal,
-       roughnessMap: redCrystal.roughness,
+       metalnessMap: violetCrystal.metalness,
+       normalMap: violetCrystal.normal,
+       roughnessMap: violetCrystal.roughness,
        displacementMap: metalTexture.displacement,
        displacementScale: 0.4,
        metalness: 1,
@@ -181,9 +181,9 @@ function createMaterial() {
 
    greenCrystalMaterial = new THREE.MeshStandardMaterial({
        map: greenCrystal.albedo,
-       metalnessMap: redCrystal.metalness,
-       normalMap: redCrystal.normal,
-       roughnessMap: redCrystal.roughness,
+       metalnessMap: greenCrystal.metalness,
+       normalMap: greenCrystal.normal,
+       roughnessMap: greenCrystal.roughness,
        displacementMap: metalTexture.displacement,
        displacementScale: 0.4,
        metalness: 1,
@@ -370,3 +370,24 @@ window.addEventListener("keydown", function(e) {
     if (greenCrystalMaterial) greenCrystalMaterial.wireframe = wireframeActivo;
   }
 });
+
+
+// Botones interactivos.
+const redCrystalMaterialButton = document.getElementById("textura01");
+redCrystalMaterialButton.addEventListener("mousedown", function() {
+   ring.material = redCrystalMaterial;
+   mesh.material = redCrystalMaterial;
+});
+
+const violetCrystalMaterialButton = document.getElementById("textura02");
+violetCrystalMaterialButton.addEventListener("mousedown", function() {
+   ring.material = violetCrystalMaterial;
+   mesh.material = violetCrystalMaterial;
+});
+ 
+const greenCrystalMaterialButton = document.getElementById("textura03");   
+greenCrystalMaterialButton.addEventListener("mousedown", function() {
+   ring.material = greenCrystalMaterial;
+   mesh.material = greenCrystalMaterial;
+});
+
