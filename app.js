@@ -357,3 +357,16 @@ buttons.forEach(btn => {
     tooltip.style.opacity = 0;
   });
 });
+
+let wireframeActivo = false;
+
+window.addEventListener("keydown", function(e) {
+  if (e.key.toLowerCase() === "w") {
+    wireframeActivo = !wireframeActivo;
+
+    if (metalMaterial) metalMaterial.wireframe = wireframeActivo;
+    if (redCrystalMaterial) redCrystalMaterial.wireframe = wireframeActivo;
+    if (violetCrystalMaterial) violetCrystalMaterial.wireframe = wireframeActivo;
+    if (greenCrystalMaterial) greenCrystalMaterial.wireframe = wireframeActivo;
+  }
+});
