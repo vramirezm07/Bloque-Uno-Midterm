@@ -391,3 +391,15 @@ greenCrystalMaterialButton.addEventListener("mousedown", function() {
    mesh.material = greenCrystalMaterial;
 });
 
+
+window.addEventListener('resize', () => {
+   // Ajustar tamaño del canvas y render
+   canvas.width = window.innerWidth;
+   canvas.height = window.innerHeight; 
+   renderer.setSize(window.innerWidth, window.innerHeight);
+
+   // Actualizar cámara
+   camera.aspect = window.innerWidth / window.innerHeight;
+   camera.updateProjectionMatrix();
+});
+
