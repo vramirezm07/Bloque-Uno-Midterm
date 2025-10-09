@@ -1,4 +1,4 @@
-///////// SCAFFOLD.
+
 // 1. Importar librerías.
 console.log(THREE);
 console.log(gsap);
@@ -91,6 +91,10 @@ manager.onError = function (url) {
 // 2. "Texture loader" para nuestros assets.
 const loader = new THREE.TextureLoader(manager);
 
+// Cube texture loader (para cargar skybox o cubemaps, no lo usamos en este proyecto pero es bueno saber que existe).
+const cubeTexLoader = new THREE.CubeTextureLoader(manager);
+
+
 // 3. Cargamos texturas guardadas en el folder del proyecto.
 
 const redCrystal = {
@@ -130,6 +134,13 @@ const metalTexture = {
   displacement: loader.load('./assets/texturas/metal/displacement.png'),
 };
 
+const envMap = cubeTexLoader.load([
+   './assets/texturas/cube/posx.jpg', './assets/texturas/cube/negx.jpg',   // +X, -X
+   './assets/texturas/cube/posy.jpg', './assets/texturas/cube/negy.jpg',   // +Y, -Y
+   './assets/texturas/cube/posz.jpg', './assets/texturas/cube/negz.jpg'    // +Z, -Z
+]);
+
+scene.background = envMap;
 
 // NOTA: las texturas se cargan de forma asíncrona, por lo que no podemos usarlas hasta que no estén todas cargadas.
 
@@ -142,6 +153,10 @@ var greenCrystalMaterial;
 
 function createMaterial() {
    metalMaterial = new THREE.MeshStandardMaterial({
+       envMap: envMap,
+       metalness: 0.8,
+       roughness: 0.4,
+       
        map: metalTexture.albedo,
        aoMap: metalTexture.ao,
        metalnessMap: metalTexture.metalness,
@@ -156,10 +171,14 @@ function createMaterial() {
    });
 
    redCrystalMaterial = new THREE.MeshStandardMaterial({
+       envMap: envMap,
+       metalness: 0.8,
+       roughness: 0.4,
+
        map: redCrystal.albedo,
-       metalnessMap: redCrystal.metalness,
+       //metalnessMap: redCrystal.metalness,
        normalMap: redCrystal.normal,
-       roughnessMap: redCrystal.roughness,
+       //roughnessMap: redCrystal.roughness,
        displacementMap: metalTexture.displacement,
        displacementScale: 0.4,
        metalness: 1,
@@ -168,10 +187,14 @@ function createMaterial() {
    });
 
    violetCrystalMaterial = new THREE.MeshStandardMaterial({
+       envMap: envMap,
+       metalness: 0.8,
+       roughness: 0.4,
+
        map: violetCrystal.albedo,
-       metalnessMap: violetCrystal.metalness,
-       normalMap: violetCrystal.normal,
-       roughnessMap: violetCrystal.roughness,
+       //metalnessMap: violetCrystal.metalness,
+       //normalMap: violetCrystal.normal,
+       //roughnessMap: violetCrystal.roughness,
        displacementMap: metalTexture.displacement,
        displacementScale: 0.4,
        metalness: 1,
@@ -180,6 +203,10 @@ function createMaterial() {
    });
 
    greenCrystalMaterial = new THREE.MeshStandardMaterial({
+       envMap: envMap,
+       metalness: 0.8,
+       roughness: 0.4,
+
        map: greenCrystal.albedo,
        metalnessMap: greenCrystal.metalness,
        normalMap: greenCrystal.normal,
@@ -391,15 +418,44 @@ greenCrystalMaterialButton.addEventListener("mousedown", function() {
    mesh.material = greenCrystalMaterial;
 });
 
-
-window.addEventListener('resize', () => {
+// ReSize del canvas y la cámara.
+//window.addEventListener('resize', () => {
    // Ajustar tamaño del canvas y render
-   canvas.width = window.innerWidth;
-   canvas.height = window.innerHeight; 
-   renderer.setSize(window.innerWidth, window.innerHeight);
+   //canvas.width = window.innerWidth;
+   //canvas.height = window.innerHeight; 
+//   renderer.setSize(window.innerWidth, window.innerHeight);
 
    // Actualizar cámara
-   camera.aspect = window.innerWidth / window.innerHeight;
-   camera.updateProjectionMatrix();
-});
+//   camera.aspect = window.innerWidth / window.innerHeight;
+//   camera.updateProjectionMatrix();
+//});
 
+
+// 1. Crear una función con las instrucciones para actualizar el tamaño de nuestro canvas.
+
+function updateCanvasSize() {
+   canvas.width = window.innerWidth;
+   canvas.height = window.innerHeight;
+}
+
+// 2. Crear otra función para actualizar la resolución de nuestro renderizador.
+
+function updateRenderer() {
+   renderer.setSize(canvas.width, canvas.height);
+
+   // actualizar pixel ratio (para pantallas retina, pero limitar a 2 para rendimiento)
+   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+}
+
+function updateCameraAspect() {
+   camera.aspect = canvas.width / canvas.height;
+   camera.updateProjectionMatrix(); // cuando cambiamos algún parámetro de la cámara, hay que actualizar la matriz de proyección.
+}
+
+// 4. Definir un event listener al “resize” para ejecutar las 3 funciones que creamos en los pasos anteriores.
+
+window.addEventListener("resize", function() {
+   updateCanvasSize();
+   updateRenderer();
+   updateCameraAspect();
+});
