@@ -29,15 +29,20 @@ header {
     font-family: "Nabla", sans-serif;
 }
 
+
 .title {
-     padding:  0;
-    position: relative;
-    text-align: right;
-    font-size: 3.5vh;
+    font-size: clamp(4vh, 5vw + 1vh, 10vh);
+    align-content: center;
     color: rgb(104, 70, 255);
     font-weight: lighter;
-    -webkit-font-smoothing: antialiased;
-    font-smooth: always;
+    text-shadow: 0 0 10px #4b1f78, 0 0 20px #3c0070;
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+.subtitle {
+    font-size: clamp(2vh, 2vw + 1vh, 3.5vh);
+    color: rgb(104, 70, 255);
+    align-content: center;
 }
 
 footer {
@@ -57,7 +62,7 @@ a i {
       color: #ff4081; /* cambia al pasar el mouse */
     }
 
-.subtitle {
+.title {
     position: relative;
     padding:  0;
     font-size: 10vh;
@@ -116,31 +121,28 @@ a i {
 
 
 
-#contenedorTexturas {
-    position: absolute;
-    top: 25%;   /* coloca el centro vertical */
-    left: 80%;  /* coloca el centro horizontal */
-    display: flex;
-    flex-direction: column; /* en columna */
-    align-items: center;
-    gap: 2vh; /* espacio entre botones */
-}
-
-
-
 .menuTitulo {         
     position: absolute;
     top: 20%;
     left: 80%;
+    transform: translateX(-30%);
     font-size: 2.5vh;
     color: #fff;
     letter-spacing: 0.1em;
-    font-weight: bold;
-    margin-bottom: 1vh;
-    align-content: center;
-    font-family: "Rubik 80s Fade", system-ui;
     font-weight: 400;
-    font-style: normal;
+    text-align: center;
+    font-family: "Rubik 80s Fade", system-ui;
+}
+
+#contenedorTexturas {
+    position: absolute;
+    top: 25%;
+    left: 80%;
+    transform: translateX(-30%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2vh;
 }
 
 .indicacionesMenu {
